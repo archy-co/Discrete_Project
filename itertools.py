@@ -41,25 +41,20 @@ def combinations_with_replacement(r:int, n:int, human_count=False) -> list:
     Returns generator of combinations C(r, n) with repetitions in sorted order
     r - elements in each combination
     n - total length of possible values for each position
-    human_count - if True counting starts from 1, else from 0
+    human_count - True: counting starts from 1; False: from 0
 
     * Steps indicates the step number accordingly to the proposed human language algorithm
     in lecture
 
-    >>> list(combinations_with_replacement(0, 0))
-    []
-    >>> list(combinations_with_replacement(2, 4, True))
-    [(1, 1), (1, 2), (1, 3), (1, 4), (2, 2), (2, 3), (2, 4), (3, 3), (3, 4), (4, 4)]
     >>> list(combinations_with_replacement(2, 4, False))
     [(0, 0), (0, 1), (0, 2), (0, 3), (1, 1), (1, 2), (1, 3), (2, 2), (2, 3), (3, 3)]
-    >>> list(combinations_with_replacement(2, 1))
-    [(0, 0)]
     >>> list(combinations_with_replacement(2, 2))
     [(0, 0), (0, 1), (1, 1)]
     '''
 
-    if n == 0 or r == 0:
+    if n == 0 or r == 0 or (type(r) is not int) or (type(n) is not int):
         return []
+
     nums = list(range(1, n+1) if human_count else range(n))
 
     rec_combo = [nums[0] for _ in range(r)]

@@ -36,7 +36,6 @@ def combinations(iterable, r):
         yield tuple(pool[i] for i in indices)
 
 
-
 def combinations_with_replacement(r:int, n:int, human_count=False) -> list:
     '''
     Returns generator of combinations C(r, n) with repetitions in sorted order

@@ -30,11 +30,9 @@ def cycle(iterable):
     >>> cyc = cycle([1]); [next(cyc) for _ in range(5)]
     [1, 1, 1, 1, 1]
     '''
-    i = 0
-    length = len(iterable)
-    while True:
-        yield iterable[i]
-        i = (i + 1) % length
+    while iterable:
+        for el in iterable:
+            yield el
 
 
 if __name__ == '__main__':

@@ -75,7 +75,7 @@ def combinations_with_replacement(r:int, n:int, human_count=False) -> list:
     Returns generator of combinations C(r, n) with repetitions in sorted order
     r - elements in each combination
     n - total length of possible values for each position
-    human_count - True: counting starts from 1; False: from 0
+    human_count - True: counts from 1; False: counts from 0
 
     * Steps indicates the step number accordingly to the proposed human language algorithm
     in lecture
@@ -86,7 +86,7 @@ def combinations_with_replacement(r:int, n:int, human_count=False) -> list:
     [(0, 0), (0, 1), (1, 1)]
     '''
 
-    if n == 0 or r == 0 or (type(r) is not int) or (type(n) is not int):
+    if n == 0 or r == 0:
         return []
 
     nums = list(range(1, n+1) if human_count else range(n))

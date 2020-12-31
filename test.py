@@ -2,7 +2,7 @@
 A testing module for itertools.py
 """
 
-from tools import count, cycle
+from tools import count, cycle, combinations_with_replacement
 import itertools
 import pytest
 
@@ -78,41 +78,29 @@ def test_combinations_9():
 
 
 # combinations_with_replacement
+def test_comb_with_rep_bc():
+    '''
+    Test combinations_with_replacement for some basic arguments in comparison
+    with original itertools module function implementation
+    '''
+
+    params = ((3, 0), (2, 1), (2, 2), (3, 2))
+    for r, n in params:
+        my_result = combinations_with_replacement(r, n)
+        original = itertools.combinations_with_replacement(range(n), r)
+        assert list(my_result) == list(original)
+
+
 def test_comb_with_rep_zero_value_1():
-    assert list(itertools.combinations_with_replacement(0, 5)) == []
-
-
-def test_comb_with_rep_zero_value_2():
-    assert list(itertools.combinations_with_replacement(3, 0)) == []
-
-
-def test_comb_with_rep_3():
-    assert list(itertools.combinations_with_replacement(2, 1)) == [(0, 0)]
-
-
-def test_comb_with_rep_4():
-    assert list(itertools.combinations_with_replacement(2, 2)) == [(0, 0), (0, 1), (1, 1)]
-
-
-def test_comb_with_rep_5():
-    assert list(itertools.combinations_with_replacement(3, 2)) == [
-        (0, 0, 0), (0, 0, 1), (0, 1, 1), (1, 1, 1)]
+    assert list(combinations_with_replacement(0, 5)) == []
 
 
 def test_comb_with_rep_human_count_1():
-    assert list(itertools.combinations_with_replacement(2, 4, True)) == [
+    assert list(combinations_with_replacement(2, 4, True)) == [
         (1, 1), (1, 2), (1, 3), (1, 4), (2, 2), (2, 3), (2, 4), (3, 3), (3, 4), (4, 4)]
 
 
 def test_comb_with_rep_human_count_2():
-    assert list(itertools.combinations_with_replacement(2, 4, False)) == [
+    assert list(combinations_with_replacement(2, 4, False)) == [
         (0, 0), (0, 1), (0, 2), (0, 3), (1, 1), (1, 2), (1, 3), (2, 2), (2, 3), (3, 3)]
-
-
-def test_comb_with_rep_incorrect_input_1():
-    assert list(itertools.combinations_with_replacement('', 4)) == []
-
-
-def test_comb_with_rep_incorrect_input_2():
-    assert list(itertools.combinations_with_replacement(3, ['h', 'i'])) == []
 

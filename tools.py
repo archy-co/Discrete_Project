@@ -71,6 +71,45 @@ def combinations(iterable, r):
         yield tuple(pool[i] for i in indices)
 
 
+def permutations(iterable, r=None):
+    '''
+    (iterable, int) -> generator
+
+    Returns the placement generator elements from iterable to length elements 
+    (when length is not specified - just permutation generator)
+
+    >>> list(permutations('ABC', 3))
+    [('A', 'B', 'C'), ('A', 'C', 'B'), ('B', 'A', 'C'), ('B', 'C', 'A'), ('C', 'A', 'B'), ('C', 'B', 'A')]
+    >>> list(permutations(range(3)))
+    [(0, 1, 2), (0, 2, 1), (1, 0, 2), (1, 2, 0), (2, 0, 1), (2, 1, 0)]
+    >>> list(permutations('abc', 0))
+    [()]
+    >>> list(permutations('', 6))
+    []
+    '''
+    pool = tuple(iterable)
+    n = len(pool)
+    r = n if r is None else r
+    if r > n:
+        return
+    indices = list(range(n))
+    cycles = list(range(n, n-r, -1))
+    yield tuple(pool[i] for i in indices[:r])
+    while n:
+        for i in reversed(range(r)):
+            cycles[i] -= 1
+            if cycles[i] == 0:
+                indices[i:] = indices[i+1:] + indices[i:i+1]
+                cycles[i] = n - i
+            else:
+                j = cycles[i]
+                indices[i], indices[-j] = indices[-j], indices[i]
+                yield tuple(pool[i] for i in indices[:r])
+                break
+        else:
+            return
+
+
 def combinations_with_replacement(r: int, n: int, human_count=False) -> list:
     '''
     Returns generator of combinations C(r, n) with repetitions in sorted order

@@ -75,6 +75,23 @@ def test_combinations():
     )
 
 
+
+def test_permutations():
+    """
+    Test tools.permutations
+    """
+    assert list(tools.permutations('ABC', 2)) == (list(itertools.permutations('ABC', 2)))
+
+    assert list(tools.permutations(range(3))) == (list(itertools.permutations(range(3))))
+
+    assert list(tools.permutations('abc', 0)) == (list(itertools.permutations('abc', 0)))
+
+    assert list(tools.permutations('', 2)) == (list(itertools.permutations('', 2)))
+
+    assert list(tools.permutations({'A', 'B', 'C'}, 2)) == \
+            list(itertools.permutations({'A', 'B', 'C'}, 2))
+
+
 # combinations_with_replacement
 def test_comb_with_rep_bc():
     '''

@@ -90,10 +90,23 @@ def combinations_with_replacement(r: int, n: int, human_count=False) -> list:
     if n == 0 or r == 0:
         return []
 
-    nums = list(range(1, n+1) if human_count else range(n))
+    iter_types = [str, list, tuple]
+
+    if type(n) in iter_types:
+        is_iter = True
+
+        def correspond(curr):
+            return tuple(n[i] for i in curr)
+    else: is_iter = False
+
+
+    if is_iter:
+        nums = list(range(len(n)))
+    else:
+        nums = list(range(1, n+1) if human_count else range(n))
 
     rec_combo = [nums[0] for _ in range(r)]
-    yield tuple(rec_combo)
+    yield correspond(rec_combo) if is_iter else tuple(rec_combo)
 
     while True:
         # step 1
@@ -103,7 +116,7 @@ def combinations_with_replacement(r: int, n: int, human_count=False) -> list:
                 # step 2
                 rec_combo[i] += 1
 
-                yield tuple(rec_combo)
+                yield correspond(rec_combo) if is_iter else tuple(rec_combo)
                 break
 
             if i == 0:
@@ -115,7 +128,7 @@ def combinations_with_replacement(r: int, n: int, human_count=False) -> list:
             # step 3
             rec_combo[i-1:] = [rec_combo[i-1]+1]*(len(rec_combo)-i+1)
 
-            yield tuple(rec_combo)
+            yield correspond(rec_combo) if is_iter else tuple(rec_combo)
 
             break
 

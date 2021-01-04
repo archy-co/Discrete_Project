@@ -93,6 +93,14 @@ def test_comb_with_rep_zero_value_1():
     assert list(tools.combinations_with_replacement(0, 5)) == []
 
 
+def test_comb_with_rep_iterable():
+    params = ((2, 'abc'), (4, 'ABCDE'), (1, 'aa'), (4, '!k%#f&@'))
+    for r, n in params:
+        my_result = tools.combinations_with_replacement(r, n)
+        original = itertools.combinations_with_replacement(n, r)
+        assert list(my_result) == list(original)
+
+
 def test_comb_with_rep_human_count_1():
     assert list(tools.combinations_with_replacement(2, 4, True)) == [
         (1, 1), (1, 2), (1, 3), (1, 4), (2, 2), (2, 3), (2, 4), (3, 3), (3, 4), (4, 4)]

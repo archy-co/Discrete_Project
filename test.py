@@ -101,3 +101,30 @@ def test_comb_with_rep_human_count_1():
 def test_comb_with_rep_human_count_2():
     assert list(tools.combinations_with_replacement(2, 4, False)) == [
         (0, 0), (0, 1), (0, 2), (0, 3), (1, 1), (1, 2), (1, 3), (2, 2), (2, 3), (3, 3)]
+
+
+# repeat
+def test_repeat_2():
+    assert next(tools.repeat('123')) == '123'
+
+def test_repeat_3():
+    gen = tools.repeat(2)
+    assert [next(gen) for _ in range(5)] == [2, 2, 2, 2, 2]
+
+
+# product
+def test_product_1():
+    assert list(tools.product('AB', [1, 2])) == [
+        ('A', 1), ('A', 2), ('B', 1), ('B', 2)]
+
+def test_product_2():
+    assert next(tools.product('ABC', [1, 2])) == ('A', 1)
+
+def test_product_3():
+    gen = tools.product('123', [1, 2])
+    assert [next(gen) for _ in range(5)] == [('1', 1), ('1', 2), ('2', 1), ('2', 2), ('3', 1)]
+
+def test_product_4():
+    gen = tools.product([3, 4], [0, 1, 2])
+    assert [next(gen) for _ in range(5)] == [(3, 0), (3, 1), (3, 2), (4, 0), (4, 1)]
+

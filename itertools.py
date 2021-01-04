@@ -2,6 +2,7 @@
 This module implements a number of iterator building blocks.
 """
 
+
 def count(start=0, step=1):
     '''
     Return infinite iterator through evenly spaced numbers
@@ -70,7 +71,7 @@ def combinations(iterable, r):
         yield tuple(pool[i] for i in indices)
 
 
-def combinations_with_replacement(r:int, n:int, human_count=False) -> list:
+def combinations_with_replacement(r: int, n: int, human_count=False) -> list:
     '''
     Returns generator of combinations C(r, n) with repetitions in sorted order
     r - elements in each combination
@@ -105,7 +106,8 @@ def combinations_with_replacement(r:int, n:int, human_count=False) -> list:
                 yield tuple(rec_combo)
                 break
 
-            if i == 0: return
+            if i == 0:
+                return
 
             if not rec_combo[i-1] + 1 in nums:
                 continue
@@ -116,3 +118,34 @@ def combinations_with_replacement(r:int, n:int, human_count=False) -> list:
             yield tuple(rec_combo)
 
             break
+
+
+def repeat(value):
+    """
+    Make an iterator that returns object over and over again.
+    Runs indefinitely
+    >>> next(repeat('123'))
+    '123'
+    >>> gen = repeat(2); [next(gen) for _ in range(5)]
+    [2, 2, 2, 2, 2]
+    """
+    while True:
+        yield value
+
+
+def product(*iterables):
+    """
+    Cartesian product of input iterables.
+    >>> next(product('ABC', [1, 2]))
+    ('A', 1)
+    >>> gen = product('123', [1, 2]); [next(gen) for _ in range(5)]
+    [('1', 1), ('1', 2), ('2', 1), ('2', 2), ('3', 1)]
+    >>> gen = product([3, 4], [0, 1, 2]); [next(gen) for _ in range(5)]
+    [(3, 0), (3, 1), (3, 2), (4, 0), (4, 1)]
+    """
+    pools = map(tuple, iterables)
+    result = [[]]
+    for pool in pools:
+        result = [x+[y] for x in result for y in pool]
+    for prod in result:
+        yield tuple(prod)
